@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Smart — Chronic Inflammation &amp; Repair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d1917;
+    --panel:#122522;
+    --card:#16302b;
+    --card-hi:#1b3a33;
+    --line:#28453e;
+    --amber:#e2a53c;
+    --mint:#7fc9a3;
+    --mint-dim:#4d8571;
+    --ink:#eee7d8;
+    --ink-dim:#9db3ac;
+    --wrong:#c9634f;
+    --correct:#6fb583;
+    --radius-tab: 10px 10px 0 0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1100px 500px at 12% -10%, #16332c 0%, transparent 60%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.5;
+    min-height:100vh;
+  }
+  ::selection{background:var(--amber);color:#1a1208;}
+
+  /* ---------- header ---------- */
+  header{
+    padding:2.6rem 6vw 1.4rem;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .brand-row{display:flex;align-items:baseline;gap:.9rem;flex-wrap:wrap;}
+  .brand-mark{
+    width:14px;height:14px;border-radius:3px;
+    background:var(--amber);
+    box-shadow:0 0 0 3px rgba(226,165,60,.18);
+    transform:rotate(45deg);
+    flex:none;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size:clamp(2.1rem, 4.4vw, 3.1rem);
+    margin:0;
+    letter-spacing:-.01em;
+  }
+  header p.tagline{
+    margin:.5rem 0 0;
+    color:var(--ink-dim);
+    font-size:1.02rem;
+    max-width:46ch;
+  }
+  .specimen-tag{
+    position:absolute;
+    top:2.4rem; right:6vw;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:.4rem .9rem;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem;
+    color:var(--mint);
+    background:var(--panel);
+  }
+  @media (max-width:760px){ .specimen-tag{display:none;} }
+
+  /* ---------- nav ---------- */
+  nav{
+    display:flex;
+    gap:.35rem;
+    padding:0 6vw;
+    margin-top:1.6rem;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  nav::-webkit-scrollbar{display:none;}
+  nav button{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:.92rem;
+    font-weight:500;
+    color:var(--ink-dim);
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-bottom:none;
+    padding:.75rem 1.15rem;
+    border-radius:var(--radius-tab);
+    cursor:pointer;
+    white-space:nowrap;
+    transition:color .15s, background .15s;
+  }
+  nav button:hover{ color:var(--ink); }
+  nav button.active{
+    color:var(--amber);
+    background:var(--card);
+    border-color:var(--line);
+  }
+  main{
+    background:var(--card);
+    border-top:1px solid var(--line);
+    padding:2.6rem 6vw 5rem;
+    min-height:60vh;
+  }
+  section{ display:none; animation:fade .25s ease; }
+  section.active{ display:block; }
+  @keyframes fade{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+
+  h2.section-title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.7rem;
+    margin:0 0 .3rem;
+  }
+  p.section-sub{
+    color:var(--ink-dim);
+    margin:0 0 2rem;
+    max-width:60ch;
+    font-size:.96rem;
+  }
+
+  /* ---------- OVERVIEW ---------- */
+  .law-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+    gap:1rem;
+  }
+  .law-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-left:3px solid var(--amber);
+    border-radius:6px;
+    padding:1.1rem 1.2rem;
+  }
+  .law-card h3{
+    font-family:'Fraunces', serif;
+    font-size:1.02rem;
+    margin:0 0 .5rem;
+    color:var(--amber);
+    font-weight:600;
+  }
+  .law-card ul{margin:0; padding-left:1.1rem; color:var(--ink); font-size:.92rem;}
+  .law-card li{margin-bottom:.3rem;}
+  .law-card li:last-child{margin-bottom:0;}
+  .law-card .tiny{color:var(--ink-dim); font-size:.82rem; margin-top:.5rem;}
+
+  /* ---------- DIAGRAMS ---------- */
+  .diagram-block{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.4rem 1.4rem 1.6rem;
+    margin-bottom:1.8rem;
+  }
+  .diagram-block h3{
+    font-family:'Fraunces', serif;
+    font-size:1.15rem;
+    margin:0 0 1rem;
+    color:var(--ink);
+    display:flex; align-items:center; gap:.5rem;
+  }
+  .diagram-block h3::before{
+    content:"";
+    width:8px;height:8px;border-radius:50%;
+    background:var(--mint);
+    flex:none;
+  }
+
+  .flow-steps{display:flex; flex-direction:column; gap:0;}
+  .flow-step{
+    border:1px solid var(--line);
+    background:var(--card);
+    border-radius:6px;
+    cursor:pointer;
+    padding:.85rem 1rem;
+    font-size:.92rem;
+    display:flex; justify-content:space-between; align-items:center;
+    transition:background .15s, border-color .15s;
+  }
+  .flow-step:hover{border-color:var(--mint-dim);}
+  .flow-step.open{background:var(--card-hi); border-color:var(--mint);}
+  .flow-step .num{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--amber);
+    margin-right:.6rem;
+    font-size:.8rem;
+  }
+  .flow-arrow{
+    text-align:center;
+    color:var(--mint-dim);
+    font-size:1rem;
+    line-height:1;
+    padding:.2rem 0;
+  }
+  .flow-detail{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .25s ease;
+    background:var(--card-hi);
+    border-radius:0 0 6px 6px;
+    margin-top:-1px;
+    border:1px solid transparent;
+  }
+  .flow-detail.open{
+    max-height:220px;
+    border:1px solid var(--mint-dim);
+    border-top:none;
+  }
+  .flow-detail p{margin:0; padding:.85rem 1.1rem; font-size:.88rem; color:var(--ink-dim);}
+
+  .toggle-row{display:flex; gap:.5rem; margin-bottom:1.1rem;}
+  .toggle-row button{
+    flex:1;
+    padding:.6rem .9rem;
+    border-radius:6px;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--ink-dim);
+    font-weight:500;
+    cursor:pointer;
+    font-size:.88rem;
+  }
+  .toggle-row button.active{
+    background:var(--mint);
+    color:#0c211b;
+    border-color:var(--mint);
+  }
+  .timeline{list-style:none; margin:0; padding:0; border-left:2px solid var(--line); padding-left:1.2rem;}
+  .timeline li{position:relative; padding-bottom:1rem; font-size:.9rem; color:var(--ink);}
+  .timeline li:last-child{padding-bottom:0;}
+  .timeline li::before{
+    content:"";
+    position:absolute; left:-1.53rem; top:.15rem;
+    width:9px; height:9px; border-radius:50%;
+    background:var(--amber);
+  }
+  .timeline li b{color:var(--amber); display:block; font-size:.82rem; margin-bottom:.1rem; font-family:'IBM Plex Mono', monospace;}
+
+  table.compare{width:100%; border-collapse:collapse; font-size:.88rem; margin-top:1rem;}
+  table.compare th, table.compare td{border:1px solid var(--line); padding:.6rem .7rem; text-align:left; vertical-align:top;}
+  table.compare th{background:var(--card); color:var(--amber); font-weight:600;}
+  table.compare td{color:var(--ink-dim);}
+
+  .chip-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:.6rem;}
+  .chip{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:.8rem .8rem;
+    cursor:pointer;
+    font-size:.85rem;
+    text-align:center;
+    transition:transform .12s, border-color .12s;
+  }
+  .chip:hover{transform:translateY(-2px); border-color:var(--amber);}
+  .chip .n{font-family:'IBM Plex Mono', monospace; color:var(--mint); font-size:.72rem; display:block; margin-bottom:.25rem;}
+  .chip-detail{
+    grid-column:1 / -1;
+    background:var(--card-hi);
+    border:1px solid var(--mint-dim);
+    border-radius:6px;
+    padding:.9rem 1.1rem;
+    font-size:.88rem;
+    color:var(--ink);
+    display:none;
+  }
+  .chip-detail.show{display:block;}
+
+  .factor-tabs{display:flex; gap:.5rem; margin-bottom:1rem;}
+  .factor-tabs button{
+    padding:.5rem 1rem; border-radius:999px; border:1px solid var(--line);
+    background:var(--card); color:var(--ink-dim); cursor:pointer; font-size:.85rem;
+  }
+  .factor-tabs button.active{background:var(--amber); color:#221703; border-color:var(--amber);}
+  .factor-list{display:none;}
+  .factor-list.show{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:.6rem;}
+  .factor-item{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:.7rem .9rem; font-size:.85rem; color:var(--ink-dim);}
+  .factor-item b{color:var(--ink); display:block; font-size:.85rem; margin-bottom:.2rem;}
+
+  /* ---------- MINI MAP ---------- */
+  .map-wrap{display:grid; grid-template-columns:280px 1fr; gap:1.4rem;}
+  @media (max-width:760px){ .map-wrap{grid-template-columns:1fr;} }
+  .map-list{display:flex; flex-direction:column; gap:.4rem;}
+  .map-node{
+    text-align:left;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:.7rem .9rem;
+    color:var(--ink);
+    cursor:pointer;
+    font-size:.88rem;
+    font-weight:500;
+    position:relative;
+  }
+  .map-node::after{
+    content:"→";
+    position:absolute; right:.8rem; top:50%; transform:translateY(-50%);
+    color:var(--ink-dim); font-size:.8rem;
+  }
+  .map-node.active{
+    border-color:var(--amber);
+    background:var(--card-hi);
+    color:var(--amber);
+  }
+  .map-panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.6rem;
+    min-height:340px;
+  }
+  .map-panel h4{
+    font-family:'Fraunces', serif;
+    color:var(--amber);
+    margin:0 0 .8rem;
+    font-size:1.2rem;
+  }
+  .map-panel p{color:var(--ink-dim); font-size:.92rem; margin:0 0 .7rem;}
+  .map-panel .placeholder{color:var(--ink-dim); font-style:italic; font-size:.9rem;}
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-toolbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; flex-wrap:wrap; gap:.6rem;}
+  .fc-count{font-family:'IBM Plex Mono', monospace; color:var(--mint); font-size:.82rem;}
+  .fc-toolbar button{
+    background:var(--card); border:1px solid var(--line); color:var(--ink-dim);
+    padding:.5rem .9rem; border-radius:6px; cursor:pointer; font-size:.82rem;
+  }
+  .fc-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(230px,1fr)); gap:1rem;}
+  .fc{
+    perspective:1200px;
+    height:170px;
+    cursor:pointer;
+  }
+  .fc-inner{
+    position:relative; width:100%; height:100%;
+    transition:transform .5s;
+    transform-style:preserve-3d;
+  }
+  .fc.flipped .fc-inner{ transform:rotateY(180deg); }
+  .fc-face{
+    position:absolute; inset:0;
+    backface-visibility:hidden;
+    border-radius:8px;
+    border:1px solid var(--line);
+    padding:1rem;
+    display:flex; flex-direction:column;
+    font-size:.85rem;
+  }
+  .fc-front{background:var(--panel); color:var(--ink);}
+  .fc-back{background:var(--card-hi); color:var(--mint); transform:rotateY(180deg); border-color:var(--mint-dim);}
+  .fc-face .fc-label{font-family:'IBM Plex Mono', monospace; font-size:.65rem; color:var(--ink-dim); margin-bottom:.5rem; letter-spacing:.03em;}
+  .fc-face .fc-text{overflow-y:auto; flex:1;}
+
+  /* ---------- QUIZ ---------- */
+  .quiz-toolbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; flex-wrap:wrap; gap:.7rem;}
+  .quiz-score{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--amber);
+    font-size:.88rem;
+    border:1px solid var(--line);
+    padding:.4rem .8rem;
+    border-radius:6px;
+    background:var(--panel);
+  }
+  .quiz-toolbar button{
+    background:var(--amber); color:#221703; border:none;
+    padding:.55rem 1rem; border-radius:6px; cursor:pointer; font-weight:600; font-size:.85rem;
+  }
+  .q-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.1rem 1.2rem 1.2rem;
+    margin-bottom:1rem;
+  }
+  .q-head{display:flex; gap:.6rem; margin-bottom:.8rem;}
+  .q-num{font-family:'IBM Plex Mono', monospace; color:var(--amber); font-size:.85rem; flex:none;}
+  .q-text{font-size:.95rem; color:var(--ink);}
+  .q-options{display:flex; flex-direction:column; gap:.45rem;}
+  .q-opt{
+    text-align:left;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:.6rem .8rem;
+    color:var(--ink-dim);
+    cursor:pointer;
+    font-size:.86rem;
+  }
+  .q-opt:hover{border-color:var(--mint-dim);}
+  .q-opt.correct{background:rgba(111,181,131,.15); border-color:var(--correct); color:var(--correct);}
+  .q-opt.wrong{background:rgba(201,99,79,.15); border-color:var(--wrong); color:var(--wrong);}
+  .q-opt[disabled]{cursor:default;}
+
+  footer{
+    padding:2rem 6vw 3rem;
+    color:var(--ink-dim);
+    font-size:.8rem;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem;
+    border-top:1px solid var(--line);
+  }
+  footer span.mark{color:var(--amber);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand-row">
+    <span class="brand-mark"></span>
+    <h1>Study Smart</h1>
+  </div>
+  <p class="tagline">A compact revision kit for Chronic Inflammation &amp; Repair — the rules that matter, without the lecture.</p>
+  <span class="specimen-tag">PATHOLOGY · REVISION SET 04</span>
+</header>
+
+<nav id="tabnav">
+  <button data-tab="overview" class="active">Overview</button>
+  <button data-tab="diagrams">Diagrams</button>
+  <button data-tab="minimap">Mini Map</button>
+  <button data-tab="flashcards">Flash Cards</button>
+  <button data-tab="quiz">Quiz Bank</button>
+</nav>
+
+<main>
+
+  <!-- ============ 1. OVERVIEW ============ -->
+  <section id="overview" class="active">
+    <h2 class="section-title">Overview</h2>
+    <p class="section-sub">The essential rules only — everything you need before you touch the diagrams or the quiz.</p>
+    <div class="law-grid" id="overviewGrid"></div>
+  </section>
+
+  <!-- ============ 2. INTERACTIVE DIAGRAMS ============ -->
+  <section id="diagrams">
+    <h2 class="section-title">Interactive Diagrams</h2>
+    <p class="section-sub">Click through each figure — steps, comparisons, and complications all respond to your clicks.</p>
+
+    <div class="diagram-block">
+      <h3>Granuloma formation — click each step</h3>
+      <div class="flow-steps" id="flowSteps"></div>
+    </div>
+
+    <div class="diagram-block">
+      <h3>Primary vs. secondary union — toggle the timeline</h3>
+      <div class="toggle-row" id="unionToggle">
+        <button data-union="primary" class="active">First intention</button>
+        <button data-union="secondary">Second intention</button>
+      </div>
+      <ul class="timeline" id="unionTimeline"></ul>
+      <table class="compare">
+        <thead><tr><th>Feature</th><th>First intention</th><th>Second intention</th></tr></thead>
+        <tbody id="compareBody"></tbody>
+      </table>
+    </div>
+
+    <div class="diagram-block">
+      <h3>Complications of wound healing — click a tile</h3>
+      <div class="chip-grid" id="complicationGrid"></div>
+    </div>
+
+    <div class="diagram-block">
+      <h3>Factors that delay healing — local vs. systemic</h3>
+      <div class="factor-tabs" id="factorTabs">
+        <button data-factor="local" class="active">Local factors</button>
+        <button data-factor="systemic">Systemic factors</button>
+      </div>
+      <div class="factor-list show" id="factorLocal"></div>
+      <div class="factor-list" id="factorSystemic"></div>
+    </div>
+  </section>
+
+  <!-- ============ 3. MINI MAP ============ -->
+  <section id="minimap">
+    <h2 class="section-title">Mini Map</h2>
+    <p class="section-sub">Click a topic on the left — its summary opens here on the right.</p>
+    <div class="map-wrap">
+      <div class="map-list" id="mapList"></div>
+      <div class="map-panel" id="mapPanel">
+        <p class="placeholder">Select a topic to open its summary.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. FLASH CARDS ============ -->
+  <section id="flashcards">
+    <h2 class="section-title">Flash Cards</h2>
+    <p class="section-sub">Tap a card to flip it.</p>
+    <div class="fc-toolbar">
+      <span class="fc-count" id="fcCount"></span>
+      <button id="shuffleFc">Shuffle order</button>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </section>
+
+  <!-- ============ 5. QUIZ BANK ============ -->
+  <section id="quiz">
+    <h2 class="section-title">Quiz Bank</h2>
+    <p class="section-sub">Answer options are reshuffled every time the bank loads.</p>
+    <div class="quiz-toolbar">
+      <span class="quiz-score" id="quizScore">Score: 0 / 0</span>
+      <button id="reshuffleQuiz">Reshuffle quiz</button>
+    </div>
+    <div id="quizList"></div>
+  </section>
+
+</main>
+
+<footer>
+  <span>© <span class="mark">Anmar Taha</span> — All rights reserved.</span>
+  <span>Study Smart · Chronic Inflammation &amp; Repair</span>
+</footer>
+
+<script>
+/* ===================== TAB SWITCHING ===================== */
+const tabButtons = document.querySelectorAll('#tabnav button');
+const sections = document.querySelectorAll('main > section');
+tabButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    tabButtons.forEach(b=>b.classList.remove('active'));
+    sections.forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ===================== 1. OVERVIEW DATA ===================== */
+const overviewData = [
+  {t:"Definition", items:[
+    "Chronic inflammation = inflammation of prolonged duration (weeks–months–years).",
+    "Active inflammation, tissue injury, and healing all occur at the same time."
+  ]},
+  {t:"3 Ways it starts", items:[
+    "After acute inflammation (extensive damage / persistent bacteria) — e.g. osteomyelitis.",
+    "Recurrent bouts of acute inflammation — e.g. chronic pyelonephritis.",
+    "Chronic from the outset (de novo) — e.g. TB, or autoimmunity — e.g. RA, SLE."
+  ]},
+  {t:"3 Hallmarks", items:[
+    "Mononuclear cell infiltration (macrophages, lymphocytes, plasma cells).",
+    "Tissue destruction by the persistent agent or by inflammatory cells.",
+    "Healing attempts by fibrosis — angiogenesis + fibroblast proliferation."
+  ]},
+  {t:"Key cell: the macrophage", items:[
+    "Most important cell in chronic inflammation.",
+    "Releases protease, elastase, collagenase, ROS, IL-1/IL-8/TNF-α, NO."
+  ]},
+  {t:"Plasma cells", items:[
+    "Larger than lymphocytes, abundant cytoplasm, eccentric nucleus.",
+    "↑ in prolonged infection, hypersensitivity, and multiple myeloma."
+  ]},
+  {t:"2 Types of chronic inflammation", items:[
+    "Non-specific — granulation tissue + fibrosis (e.g. chronic ulcer, lung abscess).",
+    "Granulomatous — aggregates of activated macrophages (e.g. TB, leprosy, sarcoidosis)."
+  ]},
+  {t:"Granuloma — definition", items:[
+    "Circumscribed collection of epithelioid cells rimmed by lymphocytes.",
+    "Formation = Type IV (delayed) hypersensitivity reaction."
+  ]},
+  {t:"Healing = 2 processes", items:[
+    "Regeneration — parenchymal cell proliferation, full restoration.",
+    "Repair — connective tissue proliferation → fibrosis + scarring."
+  ]},
+  {t:"Repair needs", items:[
+    "Granulation tissue formation.",
+    "Wound contraction (myofibroblasts)."
+  ]},
+  {t:"Primary vs. secondary union", items:[
+    "Primary: clean, sutured, minimal loss → fast, neat scar.",
+    "Secondary: open, large defect → slow healing, wound contraction, bigger scar."
+  ]},
+  {t:"Complications to remember", items:[
+    "Infection, implantation cyst, pigmentation, deficient scar.",
+    "Incisional hernia, keloid/hypertrophic scar, excess contraction, neoplasia (Marjolin's ulcer)."
+  ]},
+  {t:"Factors that delay healing", items:[
+    "Local: infection, poor blood supply, foreign bodies, movement, radiation.",
+    "Systemic: old age, malnutrition, steroids, diabetes, blood disorders."
+  ]},
+];
+const ovGrid = document.getElementById('overviewGrid');
+overviewData.forEach(c=>{
+  const div = document.createElement('div');
+  div.className='law-card';
+  div.innerHTML = `<h3>${c.t}</h3><ul>${c.items.map(i=>`<li>${i}</li>`).join('')}</ul>`;
+  ovGrid.appendChild(div);
+});
+
+/* ===================== 2. DIAGRAMS ===================== */
+// Granuloma flow
+const flowData = [
+  {title:"Cell injury", detail:"An injurious agent (e.g. M. tuberculosis, talc) damages tissue and the body fails to fully digest it."},
+  {title:"Weak acute response → engulfment by macrophages", detail:"A weak acute inflammatory response occurs; macrophages engulf the agent but it persists."},
+  {title:"Persistence of the injurious agent", detail:"The agent survives inside macrophages, splitting the response into two arms."},
+  {title:"T cell–mediated immune response", detail:"CD4+ T cells activate, releasing IL-1, IL-2, IFN-γ and TNF-α, plus monocyte chemotactic factor."},
+  {title:"Poorly digestible agent", detail:"In parallel, the indigestible material keeps macrophages accumulating at the site."},
+  {title:"Accumulation & activation of macrophages", detail:"Increased recruitment from the circulation, local proliferation, and T-cell proliferation; macrophages are activated by IFN-γ."},
+  {title:"Transformation & cytokine secretion", detail:"Macrophages transform into epithelioid cells and giant cells, and secrete fibroblast-proliferating cytokines (TGF-β, PDGF)."},
+  {title:"Granuloma", detail:"The final lesion: a core of epithelioid cells and giant cells rimmed by lymphocytes, with surrounding fibrosis."},
+];
+const flowWrap = document.getElementById('flowSteps');
+flowData.forEach((s,i)=>{
+  const step = document.createElement('div');
+  step.className='flow-step';
+  step.innerHTML = `<span><span class="num">${String(i+1).padStart(2,'0')}</span>${s.title}</span><span>+</span>`;
+  const detail = document.createElement('div');
+  detail.className='flow-detail';
+  detail.innerHTML = `<p>${s.detail}</p>`;
+  step.addEventListener('click', ()=>{
+    const wasOpen = step.classList.contains('open');
+    document.querySelectorAll('.flow-step').forEach(f=>f.classList.remove('open'));
+    document.querySelectorAll('.flow-detail').forEach(f=>f.classList.remove('open'));
+    if(!wasOpen){ step.classList.add('open'); detail.classList.add('open'); }
+  });
+  flowWrap.appendChild(step);
+  flowWrap.appendChild(detail);
+  if(i < flowData.length-1){
+    const arrow = document.createElement('div');
+    arrow.className='flow-arrow';
+    arrow.textContent='↓';
+    flowWrap.appendChild(arrow);
+  }
+});
+
+// Primary vs secondary union timelines
+const unionTimelines = {
+  primary:[
+    {t:"Immediately", d:"Initial hemorrhage — blood clots at the site of injury."},
+    {t:"Within 24 h", d:"Acute inflammatory response — plasma, neutrophils, some monocytes."},
+    {t:"48 hours", d:"Epithelial spurs from both cut margins meet; wound covered by epithelium."},
+    {t:"Day 3", d:"Fibroblasts invade the wound area — start of organization."},
+    {t:"Day 5", d:"New collagen fibrils form; multilayered new epidermis is complete."},
+    {t:"4 weeks", d:"Scar tissue: scanty cells/vessels, few inflammatory cells, epithelialized surface."},
+  ],
+  secondary:[
+    {t:"Immediately", d:"Initial hemorrhage, larger tissue defect to bridge."},
+    {t:"Early", d:"Inflammatory phase, then epithelial spurs migrate from both margins."},
+    {t:"Ongoing", d:"Epithelial cells do not fully cover the surface until granulation tissue fills the gap from the base."},
+    {t:"Main bulk", d:"Granulation tissue forms by fibroblast proliferation + neovascularization — deep red, granular, fragile."},
+    {t:"Throughout", d:"Wound contraction by myofibroblasts — shrinks to 1/3–1/4 of original size."},
+    {t:"Maturation", d:"Scar becomes pale and white as collagen increases and vascularity decreases."},
+  ]
+};
+const compareRows = [
+  ["Wound type","Clean, uninfected, incised","Open, large defect, at times infected"],
+  ["Tissue loss","Minimal","Extensive"],
+  ["Edges","Approximated by sutures","Left open, not approximated"],
+  ["Wound contraction","Not a feature","Important feature (myofibroblasts)"],
+  ["Speed & scar","Rapid healing, neat scar","Slow healing, larger scar"],
+];
+function renderUnion(kind){
+  const tl = document.getElementById('unionTimeline');
+  tl.innerHTML = unionTimelines[kind].map(x=>`<li><b>${x.t}</b>${x.d}</li>`).join('');
+}
+document.getElementById('unionToggle').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('#unionToggle button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  renderUnion(b.dataset.union);
+});
+renderUnion('primary');
+document.getElementById('compareBody').innerHTML = compareRows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+
+// Complications
+const complications = [
+  {n:"1", t:"Infection", d:"The wound may become infected due to entry of bacteria."},
+  {n:"2", t:"Implantation cyst", d:"Persistence of epithelial cells within the wound forms an implantation epidermoid cyst."},
+  {n:"3", t:"Pigmentation", d:"Healed wounds may show a rust-like color due to staining with hemosiderin."},
+  {n:"4", t:"Deficient scar", d:"Occurs due to inadequate formation of granulation tissue."},
+  {n:"5", t:"Incisional hernia", d:"A weak scar, especially after laparotomy, may burst open (dehiscence) or form a hernia."},
+  {n:"6", t:"Keloid / hypertrophic scar", d:"Excess collagen forms a keloid (tumor-like, beyond wound borders) — more common in Blacks. Hypertrophic scars stay within the original wound borders."},
+  {n:"7", t:"Excessive contraction", d:"Exaggerated wound contraction causes contractures, e.g. Dupuytren's, plantar contracture, Peyronie's disease."},
+  {n:"8", t:"Neoplasia", d:"Rarely, a scar becomes the site of carcinoma later, e.g. squamous cell carcinoma in a Marjolin's ulcer (burn scar)."},
+];
+const compGrid = document.getElementById('complicationGrid');
+const detailBox = document.createElement('div');
+detailBox.className='chip-detail';
+complications.forEach(c=>{
+  const chip = document.createElement('div');
+  chip.className='chip';
+  chip.innerHTML = `<span class="n">0${c.n}</span>${c.t}`;
+  chip.addEventListener('click', ()=>{
+    detailBox.innerHTML = `<b style="color:var(--amber)">${c.t}</b><br>${c.d}`;
+    detailBox.classList.add('show');
+    if(detailBox.parentElement !== compGrid){ compGrid.appendChild(detailBox); }
+    else { compGrid.appendChild(detailBox); }
+  });
+  compGrid.appendChild(chip);
+});
+
+// Local / systemic factors
+const factorsLocal = [
+  {t:"Infection", d:"The most important local factor — delays the whole healing process."},
+  {t:"Poor blood supply", d:"E.g. varicose ulcers of the leg heal slowly versus the richly-vascularized face."},
+  {t:"Foreign bodies", d:"Including sutures — interfere with healing, cause inflammation and infection."},
+  {t:"Movement", d:"Movement at the wound site delays healing."},
+  {t:"Ionizing radiation", d:"Delays granulation tissue formation."},
+];
+const factorsSystemic = [
+  {t:"Age", d:"Healing is rapid in the young; slower in aged/debilitated patients (poorer local blood supply)."},
+  {t:"Nutrition", d:"Deficiency of protein, vitamin C (scurvy), vitamin A, or zinc delays healing."},
+  {t:"Systemic infection", d:"Delays wound healing generally."},
+  {t:"Glucocorticoids", d:"Their anti-inflammatory effect slows healing."},
+  {t:"Uncontrolled diabetes", d:"More prone to infection, hence delayed healing."},
+  {t:"Hematologic abnormalities", d:"Defective neutrophil chemotaxis/phagocytosis, neutropenia, and bleeding disorders slow healing."},
+];
+document.getElementById('factorLocal').innerHTML = factorsLocal.map(f=>`<div class="factor-item"><b>${f.t}</b>${f.d}</div>`).join('');
+document.getElementById('factorSystemic').innerHTML = factorsSystemic.map(f=>`<div class="factor-item"><b>${f.t}</b>${f.d}</div>`).join('');
+document.getElementById('factorTabs').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('#factorTabs button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  document.getElementById('factorLocal').classList.toggle('show', b.dataset.factor==='local');
+  document.getElementById('factorSystemic').classList.toggle('show', b.dataset.factor==='systemic');
+});
+
+/* ===================== 3. MINI MAP ===================== */
+const mapData = [
+  {t:"Chronic inflammation — definition", body:"Inflammation of prolonged duration (weeks to months to years) in which active inflammation, tissue injury, and healing occur at the same time."},
+  {t:"How chronic inflammation starts", body:"(1) Following acute inflammation, when tissue destruction is extensive or bacteria persist in small numbers — e.g. osteomyelitis, pneumonia. (2) Recurrent bouts of acute inflammation, e.g. recurrent UTI → chronic pyelonephritis, repeated acute cholecystitis → chronic cholecystitis. (3) Starting de novo with low-pathogenicity organisms chronic from the beginning, e.g. M. tuberculosis, or via autoimmunity, e.g. rheumatoid arthritis, SLE."},
+  {t:"Hallmarks of chronic inflammation", body:"Infiltration with mononuclear cells (macrophages, lymphocytes, plasma cells); tissue destruction from the persistent agent or the inflammatory cells themselves; and attempts at healing by fibrosis, achieved through angiogenesis and fibroblast proliferation."},
+  {t:"Macrophages & tissue destruction", body:"Macrophages are the most important cells in chronic inflammation. When activated they release protease, elastase, collagenase, lipase, reactive oxygen radicals, cytokines (IL-1, IL-8, TNF-α), nitric oxide, and angiogenesis growth factor — driving tissue destruction and necrosis."},
+  {t:"Plasma cells", body:"Larger than lymphocytes, with more abundant cytoplasm and an eccentric nucleus. Their numbers rise with prolonged infection carrying an immune response (syphilis, RA, TB), hypersensitivity states, and multiple myeloma."},
+  {t:"Foreign body giant cells", body:"Contain up to 100 nuclei, uniform in size and shape, scattered randomly throughout the cytoplasm. Seen in chronic infective granulomas, leprosy, and tuberculosis."},
+  {t:"Chronic non-specific inflammation", body:"When the irritant produces a non-specific chronic inflammatory reaction with granulation tissue formation and healing by fibrosis — e.g. chronic osteomyelitis, chronic ulcer, lung abscess."},
+  {t:"Chronic granulomatous inflammation", body:"A distinctive pattern with aggregates of activated macrophages and scattered lymphocytes, forming granulomas — e.g. tuberculosis, leprosy, syphilis, sarcoidosis."},
+  {t:"What is a granuloma?", body:"A circumscribed, tiny lesion made mainly of modified macrophages called epithelioid cells, rimmed at the periphery by lymphoid cells. Formation of a granuloma is a Type IV (delayed) hypersensitivity reaction."},
+  {t:"Three settings for granuloma formation", body:"(1) Persistent T-cell responses to microbes such as M. tuberculosis, T. pallidum, or fungi, where T-cell cytokines drive chronic macrophage activation, e.g. TB. (2) Immune-mediated inflammatory diseases, e.g. Crohn disease. (3) Response to relatively inert foreign bodies (suture, splinter) forming foreign body granulomas, or diseases of unknown etiology such as sarcoidosis."},
+  {t:"Healing — the big picture", body:"Healing is the body's response to injury in an attempt to restore normal structure and function. It involves two processes: regeneration (proliferation of parenchymal cells, usually complete restoration) and repair (proliferation of connective tissue, producing fibrosis and scarring). Both can occur together."},
+  {t:"Repair: two processes", body:"Repair is the replacement of injured tissue by fibrous tissue, and involves granulation tissue formation and contraction of wounds."},
+  {t:"Granulation tissue", body:"Named for its slightly granular, pink appearance. Each granule corresponds to a proliferating small blood vessel, slightly lifted by a thin covering of fibroblasts and young collagen."},
+  {t:"Three phases of granulation tissue", body:"(1) Phase of inflammation — blood clots, acute inflammatory exudate within 24 hours. (2) Phase of clearance — proteolytic enzymes from neutrophils, autolytic enzymes from dead cells, and macrophage phagocytosis clear necrotic debris and RBCs. (3) Phase of ingrowth of granulation tissue — angiogenesis/neovascularization plus fibrogenesis."},
+  {t:"Healing by first intention", body:"For wounds that are clean and uninfected, surgically incised, without much loss of cells/tissue, with edges approximated by sutures. Sequence: initial hemorrhage → acute inflammatory response → epithelial changes (covered by epithelium in 48 h; multilayered epidermis by day 5) → organization (fibroblasts by day 3, new collagen by day 5, mature scar by 4 weeks)."},
+  {t:"Healing by second intention", body:"For wounds that are open with a large tissue defect, at times infected, with extensive loss of cells/tissue, not approximated by sutures. Healing proceeds from the base upward and from the margins inward. It is slower and leaves a larger, at times uglier, scar than primary union. Granulation tissue provides the main bulk of healing, and wound contraction (via myofibroblasts) shrinks the wound to one-third to one-fourth of its original size."},
+  {t:"Complications of wound healing", body:"Infection; implantation (epidermal) cyst; pigmentation (hemosiderin staining); deficient scar formation; incisional hernia / wound dehiscence; hypertrophied scars and keloid formation (more common in Blacks); excessive contraction (e.g. Dupuytren's, plantar, Peyronie's); and rarely neoplasia, e.g. squamous cell carcinoma in a Marjolin's ulcer."},
+  {t:"Local factors delaying healing", body:"Infection (the most important local factor), poor blood supply (e.g. varicose ulcers vs. the richly vascularized face), foreign bodies including sutures, movement at the wound, and exposure to ionizing radiation."},
+  {t:"Systemic factors delaying healing", body:"Old age, malnutrition (deficiency of protein, vitamin C, vitamin A, zinc), systemic infection, glucocorticoid administration, uncontrolled diabetes (prone to infection), and hematologic abnormalities (defective neutrophil function, neutropenia, bleeding disorders)."},
+];
+const mapList = document.getElementById('mapList');
+const mapPanel = document.getElementById('mapPanel');
+mapData.forEach((m,i)=>{
+  const btn = document.createElement('button');
+  btn.className='map-node';
+  btn.textContent = m.t;
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.map-node').forEach(n=>n.classList.remove('active'));
+    btn.classList.add('active');
+    mapPanel.innerHTML = `<h4>${m.t}</h4><p>${m.body}</p>`;
+  });
+  mapList.appendChild(btn);
+});
+
+/* ===================== 4. FLASHCARDS ===================== */
+const flashcards = [
+["Define chronic inflammation.","Inflammation of prolonged duration (weeks to months to years) in which active inflammation, tissue injury and healing occur at the same time."],
+["Name the 3 ways chronic inflammation can occur.","(1) Following acute inflammation, (2) recurrent attacks of acute inflammation, (3) chronic from the beginning (de novo)."],
+["Give an example of chronic inflammation following acute inflammation.","Osteomyelitis or pneumonia, when tissue destruction is extensive or bacteria persist in small numbers."],
+["Recurrent urinary tract infection can lead to which chronic disease?","Chronic pyelonephritis."],
+["Repeated attacks of acute cholecystitis lead to?","Chronic cholecystitis."],
+["Give an example of chronic inflammation starting de novo.","Infection with Mycobacterium tuberculosis — chronic from the beginning."],
+["Name two autoimmune diseases that are chronic from the outset.","Rheumatoid arthritis and systemic lupus erythematosus."],
+["List the 3 hallmark features of chronic inflammation.","Mononuclear cell infiltration, tissue destruction, and attempts at healing by fibrosis."],
+["Which cells infiltrate chronic inflammatory lesions?","Mononuclear inflammatory cells — macrophages, lymphocytes and plasma cells."],
+["Which cell is the most important in chronic inflammation?","The macrophage."],
+["Describe the morphology of a plasma cell.","Larger than a lymphocyte, with more abundant cytoplasm and an eccentric nucleus."],
+["In which 3 conditions do plasma cell numbers rise?","Prolonged infection with immune response, hypersensitivity states, and multiple myeloma."],
+["What causes tissue destruction in chronic inflammation?","Substances released by activated macrophages — protease, elastase, collagenase, lipase, ROS, cytokines, nitric oxide."],
+["What is the healing attempt seen in chronic inflammation?","Proliferation of small blood vessels (angiogenesis) and fibroblasts, forming granulation tissue that matures to fibrosis."],
+["How many nuclei can a foreign body giant cell contain?","Up to 100, uniform in size and shape."],
+["Where are the nuclei located in a foreign body giant cell?","Scattered randomly throughout the cytoplasm."],
+["Foreign body giant cells are typically seen in which conditions?","Chronic infective granulomas, leprosy, and tuberculosis."],
+["What are the 2 types of chronic inflammation?","Chronic non-specific inflammation and chronic granulomatous inflammation."],
+["Give examples of chronic non-specific inflammation.","Chronic osteomyelitis, chronic ulcer, lung abscess."],
+["Define chronic granulomatous inflammation.","A distinctive pattern of chronic inflammation with aggregates of activated macrophages and scattered lymphocytes."],
+["Name diseases that cause granulomatous inflammation.","Tuberculosis, leprosy, syphilis, sarcoidosis."],
+["Define a granuloma.","A circumscribed, tiny lesion made mainly of modified macrophages (epithelioid cells) rimmed by lymphoid cells."],
+["What are the modified macrophages in a granuloma called?","Epithelioid cells."],
+["Granuloma formation is what type of hypersensitivity reaction?","Type IV (delayed / cell-mediated) hypersensitivity."],
+["Name 3 settings under which granulomas form.","Persistent T-cell response to microbes, immune-mediated diseases (e.g. Crohn), and response to inert foreign bodies or unknown etiology (sarcoidosis)."],
+["Which cytokine activates macrophages to become epithelioid cells?","IFN-γ, released from activated CD4+ T cells."],
+["Define healing.","The body's response to injury in an attempt to restore normal structure and function."],
+["What are the 2 processes of healing?","Regeneration and repair."],
+["Define regeneration.","Healing by proliferation of parenchymal cells, usually resulting in complete restoration of the original tissue."],
+["Define repair.","Healing by proliferation of connective tissue, resulting in fibrosis and scarring."],
+["What 2 processes are involved in repair?","Granulation tissue formation and contraction of wounds."],
+["Why is granulation tissue described as 'granular'?","Each granule corresponds to a proliferating small blood vessel lifted by a thin covering of fibroblasts and young collagen."],
+["Name the 3 phases of granulation tissue formation.","Phase of inflammation, phase of clearance, and phase of ingrowth of granulation tissue."],
+["What clears necrotic debris in the phase of clearance?","Proteolytic enzymes from neutrophils, autolytic enzymes from dead cells, and phagocytic macrophages."],
+["What are the 2 ways skin wounds can heal?","Healing by first intention (primary union) and healing by second intention (secondary union)."],
+["List the characteristics of healing by first intention.","Clean, uninfected, surgically incised wound, minimal tissue loss, edges approximated by sutures."],
+["By what day is a well-approximated wound covered by epithelium?","48 hours."],
+["By what day does a multilayered new epidermis form in primary union?","By the 5th day."],
+["When does mature scar tissue form in primary union?","By about 4 weeks."],
+["List the characteristics of healing by second intention.","Open wound, large tissue defect (sometimes infected), extensive tissue loss, not approximated by sutures."],
+["How does healing progress in secondary union?","From the base upward and from the margins inward."],
+["Compare scar quality: first vs second intention.","First intention: rapid, neat scar. Second intention: slow, larger, sometimes ugly scar."],
+["What provides the main bulk of secondary healing?","Granulation tissue (fibroblast proliferation and neovascularization)."],
+["What causes wound contraction, and by how much does the wound shrink?","Myofibroblasts in granulation tissue; the wound shrinks to one-third to one-fourth of its original size."],
+["Name the 8 complications of wound healing.","Infection, implantation cyst, pigmentation, deficient scar, incisional hernia, keloid/hypertrophic scar, excessive contraction, neoplasia."],
+["What causes rust-like pigmentation of a healed wound?","Staining with hemosiderin."],
+["Difference between hypertrophic scar and keloid?","Hypertrophic scars stay within the wound borders; keloids project beyond them like a tumor."],
+["Which population is keloid formation more common in?","Blacks."],
+["Give 3 examples of contractures from excessive wound contraction.","Dupuytren's (palmar) contracture, plantar contracture, Peyronie's disease."],
+["What is a Marjolin's ulcer?","A burn scar that becomes the site of squamous cell carcinoma."],
+["Name the local factors that delay wound healing.","Infection, poor blood supply, foreign bodies (including sutures), movement, ionizing radiation."],
+["Why do facial wounds heal faster than leg wounds with varicose ulcers?","The face has a rich blood supply; varicose ulcer areas have a poor one."],
+["Name the systemic factors that delay wound healing.","Old age, malnutrition, systemic infection, glucocorticoids, uncontrolled diabetes, hematologic abnormalities."],
+["Which vitamin deficiency (causing scurvy) delays wound healing?","Vitamin C."],
+["How do glucocorticoids delay wound healing?","Through their anti-inflammatory effect."],
+["Why do uncontrolled diabetics heal poorly?","They are more prone to infections, which delays healing."],
+["Which hematologic abnormalities slow wound healing?","Defective neutrophil chemotaxis/phagocytosis, neutropenia, and bleeding disorders."],
+];
+let fcOrder = flashcards.map((_,i)=>i);
+function renderFlashcards(){
+  const grid = document.getElementById('fcGrid');
+  grid.innerHTML='';
+  fcOrder.forEach(idx=>{
+    const [front, back] = flashcards[idx];
+    const card = document.createElement('div');
+    card.className='fc';
+    card.innerHTML = `
+      <div class="fc-inner">
+        <div class="fc-face fc-front"><span class="fc-label">QUESTION ${idx+1}</span><span class="fc-text">${front}</span></div>
+        <div class="fc-face fc-back"><span class="fc-label">ANSWER</span><span class="fc-text">${back}</span></div>
+      </div>`;
+    card.addEventListener('click', ()=> card.classList.toggle('flipped'));
+    grid.appendChild(card);
+  });
+  document.getElementById('fcCount').textContent = `${flashcards.length} cards`;
+}
+renderFlashcards();
+document.getElementById('shuffleFc').addEventListener('click', ()=>{
+  for(let i=fcOrder.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [fcOrder[i],fcOrder[j]]=[fcOrder[j],fcOrder[i]];
+  }
+  renderFlashcards();
+});
+
+/* ===================== 5. QUIZ BANK ===================== */
+const quizRaw = [
+["What best describes chronic inflammation of prolonged duration?",["Hours to days","Days to weeks","Weeks to months to years","Minutes to hours"],2],
+["Which best describes what happens simultaneously in chronic inflammation?",["Only tissue injury","Only healing","Active inflammation, tissue injury and healing together","Only active inflammation"],2],
+["Chronic inflammation following acute inflammation occurs when:",["Tissue destruction is minimal","Bacteria are completely eliminated","Tissue destruction is extensive or bacteria persist in small numbers","No bacteria were ever present"],2],
+["Which is an example of chronic inflammation following acute inflammation?",["Tuberculosis","Osteomyelitis","Rheumatoid arthritis","Sarcoidosis"],1],
+["Recurrent urinary tract infection can lead to which chronic condition?",["Chronic cholecystitis","Chronic pyelonephritis","Chronic osteomyelitis","Chronic pneumonia"],1],
+["Repeated attacks of acute cholecystitis lead to:",["Chronic pyelonephritis","Chronic cholecystitis","Chronic osteomyelitis","Sarcoidosis"],1],
+["Which organism is a classic example of chronic infection from the beginning?",["Staphylococcus aureus","Mycobacterium tuberculosis","Escherichia coli","Streptococcus pyogenes"],1],
+["Which of the following diseases is caused by autoimmunity?",["Tuberculosis","Leprosy","Systemic lupus erythematosus","Chronic osteomyelitis"],2],
+["Chronic inflammation is characterized by all of the following EXCEPT:",["Mononuclear cell infiltration","Tissue destruction","Attempts at healing by fibrosis","Massive neutrophilic infiltration"],3],
+["The most important cells in chronic inflammation are:",["Neutrophils","Eosinophils","Macrophages","Basophils"],2],
+["Chronic inflammatory lesions are infiltrated mainly by:",["Granulocytes","Mononuclear cells","Platelets","Red blood cells"],1],
+["Plasma cells are characterized by:",["Small size, central nucleus","Larger size, abundant cytoplasm, eccentric nucleus","Multinucleation","Absent cytoplasm"],1],
+["Plasma cell numbers increase in all of the following EXCEPT:",["Prolonged infection with immune response","Hypersensitivity states","Multiple myeloma","Acute appendicitis"],3],
+["Tissue destruction in chronic inflammation is mainly brought about by:",["Resting fibroblasts","Activated macrophages","Red blood cells","Platelets alone"],1],
+["Healing attempts in chronic inflammation involve proliferation of:",["Small blood vessels and fibroblasts","Neutrophils only","Red blood cells only","Basement membrane only"],0],
+["Foreign body giant cells contain how many nuclei?",["Up to 10","Up to 100","Exactly 2","Exactly 5"],1],
+["In foreign body giant cells, the nuclei are:",["Clustered at one pole","Scattered throughout the cytoplasm","Absent","Only at the periphery"],1],
+["Foreign body giant cells are typically seen in:",["Acute appendicitis","Chronic infective granulomas, leprosy, tuberculosis","Acute pneumonia","Normal healthy tissue"],1],
+["Chronic inflammation is conventionally subdivided into:",["1 type","2 types","3 types","4 types"],1],
+["Chronic osteomyelitis, chronic ulcer, and lung abscess are examples of:",["Chronic granulomatous inflammation","Chronic non-specific inflammation","Autoimmune disease","Acute inflammation"],1],
+["A granuloma is best defined as:",["A large diffuse inflammatory infiltrate","A circumscribed lesion of epithelioid cells rimmed by lymphoid cells","A collection of red blood cells","A malignant tumor"],1],
+["The modified macrophages found in granulomas are called:",["Foam cells","Epithelioid cells","Kupffer cells","Langerhans cells of skin"],1],
+["Granuloma formation is an example of which hypersensitivity reaction?",["Type I","Type II","Type III","Type IV"],3],
+["Which disease is associated with granuloma formation as an immune-mediated inflammatory disease?",["Osteomyelitis","Crohn disease","Acute pyelonephritis","Acute cholecystitis"],1],
+["Foreign body granulomas form in response to:",["Highly antigenic organisms","Relatively inert foreign material (e.g. suture, splinter)","Viral infections only","Allergic reactions only"],1],
+["Healing involves which two processes?",["Inflammation and necrosis","Regeneration and repair","Hemorrhage and infection","Congestion and edema"],1],
+["Regeneration results in:",["Fibrosis and scarring","Complete restoration via parenchymal cell proliferation","Keloid formation","Wound contraction"],1],
+["Repair is defined as:",["Replacement of injured tissue by parenchymal cells","Replacement of injured tissue by fibrous tissue","Complete regrowth of the original structure","Resolution with no tissue change"],1],
+["The two processes involved in repair are:",["Granulation tissue formation and wound contraction","Regeneration and resolution","Hemorrhage and clearance only","Angiogenesis and necrosis only"],0],
+["Granulation tissue derives its name from:",["Its smooth glassy appearance","Its slightly granular and pink appearance","Its black color","Its bony hard texture"],1],
+["The 3 phases of granulation tissue formation are:",["Inflammation, clearance, ingrowth of granulation tissue","Necrosis, calcification, ossification","Hemorrhage, infection, scarring","Edema, congestion, resolution"],0],
+["Healing by first intention requires all of the following EXCEPT:",["Clean, uninfected wound","Surgically incised wound","Extensive loss of cells and tissue","Edges approximated by sutures"],2],
+["In primary union, a well-approximated wound is covered by epithelium by:",["12 hours","48 hours","1 week","1 month"],1],
+["In primary union, a multilayered new epidermis forms by:",["Day 1","Day 5","Day 20","Day 40"],1],
+["Scar tissue formation in primary union is typically complete by:",["24 hours","1 week","4 weeks","6 months"],2],
+["Healing by second intention is characterized by:",["A small, clean incised wound","An open wound with large tissue defect, at times infected","A wound closed immediately with sutures","No granulation tissue formation"],1],
+["In secondary union, healing takes place:",["Only from the margins inward","Only from the base upward","From the base upward and from the margins inward","Randomly, with no direction"],2],
+["Compared to primary union, healing by second intention is:",["Faster, with a neater scar","Slower, with a larger, at times uglier scar","Identical in speed and scar quality","Seen only in bone healing"],1],
+["Wound contraction in secondary healing is due to the action of:",["Neutrophils","Myofibroblasts","Osteoblasts","Mast cells"],1],
+["Wound contraction typically reduces the wound to what fraction of its original size?",["One-half","One-third to one-fourth","Two-thirds","No reduction occurs"],1],
+["Which of the following is NOT a complication of wound healing?",["Keloid formation","Incisional hernia","Complete restoration without any scar","Implantation epidermal cyst"],2],
+["Rust-like pigmentation of a healed wound is due to staining with:",["Melanin","Hemosiderin","Bilirubin","Lipofuscin"],1],
+["Keloids differ from hypertrophic scars in that keloids:",["Stay confined within the wound border","Show tumor-like projection beyond the wound border","Never contain collagen","Occur only in the very young"],1],
+["Marjolin's ulcer refers to:",["A benign cyst in a scar","Squamous cell carcinoma developing in a burn scar","A hypertrophic scar only","A wound infection"],1],
+["Which local factor most commonly delays wound healing?",["Infection","Young age","Adequate blood supply","Good nutrition"],0],
+["Vitamin C deficiency causing delayed wound healing is known as:",["Rickets","Scurvy","Pellagra","Beriberi"],1],
+["Glucocorticoids delay wound healing mainly through their:",["Pro-inflammatory effect","Anti-inflammatory effect","Antibacterial effect","Anticoagulant effect"],1],
+["Uncontrolled diabetics are more prone to delayed healing because they:",["Have excess vitamin C","Are more prone to infections","Have excess granulation tissue","Never develop scars"],1],
+];
+let quizState = [];
+function buildQuiz(){
+  quizState = quizRaw.map(([q,opts,correctIdx])=>{
+    const optionObjs = opts.map((text,i)=>({text, isCorrect:i===correctIdx}));
+    for(let i=optionObjs.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [optionObjs[i],optionObjs[j]]=[optionObjs[j],optionObjs[i]];
+    }
+    return {q, options:optionObjs, answered:false};
+  });
+  renderQuiz();
+}
+let score = 0, answeredCount = 0;
+function updateScore(){
+  document.getElementById('quizScore').textContent = `Score: ${score} / ${answeredCount}`;
+}
+function renderQuiz(){
+  score = 0; answeredCount = 0; updateScore();
+  const list = document.getElementById('quizList');
+  list.innerHTML = '';
+  quizState.forEach((item, qi)=>{
+    const card = document.createElement('div');
+    card.className='q-card';
+    const optsHtml = item.options.map((o,oi)=>`<button class="q-opt" data-qi="${qi}" data-oi="${oi}">${o.text}</button>`).join('');
+    card.innerHTML = `
+      <div class="q-head"><span class="q-num">Q${qi+1}</span><span class="q-text">${item.q}</span></div>
+      <div class="q-options">${optsHtml}</div>`;
+    list.appendChild(card);
+  });
+  list.querySelectorAll('.q-opt').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const qi = +btn.dataset.qi, oi = +btn.dataset.oi;
+      const item = quizState[qi];
+      if(item.answered) return;
+      item.answered = true;
+      answeredCount++;
+      const allBtns = btn.closest('.q-options').querySelectorAll('.q-opt');
+      allBtns.forEach((b,i)=>{
+        b.disabled = true;
+        if(item.options[i].isCorrect) b.classList.add('correct');
+      });
+      if(item.options[oi].isCorrect){ score++; }
+      else { btn.classList.add('wrong'); }
+      updateScore();
+    });
+  });
+}
+buildQuiz();
+document.getElementById('reshuffleQuiz').addEventListener('click', buildQuiz);
+</script>
+</body>
+</html>
